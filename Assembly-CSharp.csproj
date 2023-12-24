@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="Assets\scripts\PlayWindBellSound.cs" />
     <Compile Include="Assets\scripts\OpenHiddenDoor.cs" />
+    <Compile Include="Assets\scripts\PlayEcho.cs" />
+    <Compile Include="Assets\scripts\PlayEchoOfHiddenDoor.cs" />
     <Compile Include="Assets\scripts\CharacterMove.cs" />
   </ItemGroup>
   <ItemGroup>
