@@ -6,6 +6,8 @@ TagManager:
   tags:
   - hidden door
   - wall
+  - kitchen
+  - tomb scene
   layers:
   - Default
   - TransparentFX

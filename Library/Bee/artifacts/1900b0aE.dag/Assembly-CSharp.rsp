@@ -354,6 +354,7 @@
 -analyzer:"D:/UNITY/2022.3.9f1c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/UNITY/2022.3.9f1c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/scripts/CharacterMove.cs"
+"Assets/scripts/GameManager.cs"
 "Assets/scripts/OpenHiddenDoor.cs"
 "Assets/scripts/PlayEcho.cs"
 "Assets/scripts/PlayEchoOfHiddenDoor.cs"
