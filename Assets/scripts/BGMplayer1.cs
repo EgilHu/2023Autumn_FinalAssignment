@@ -9,6 +9,7 @@ public class BGMplayer1 : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.loop =true;
         audioSource.Play();
     }
 

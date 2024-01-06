@@ -358,12 +358,15 @@
 "Assets/scripts/BGMplayer2.cs"
 "Assets/scripts/CameraController.cs"
 "Assets/scripts/CharacterMove.cs"
+"Assets/scripts/EndTextAndEndGame.cs"
 "Assets/scripts/GameManager.cs"
+"Assets/scripts/Intro.cs"
 "Assets/scripts/OpenHiddenDoor.cs"
 "Assets/scripts/PickUp.cs"
 "Assets/scripts/PlayEcho.cs"
 "Assets/scripts/PlayEchoOfHiddenDoor.cs"
 "Assets/scripts/PlayWindBellSound.cs"
+"Assets/scripts/ShakeBellText.cs"
 "Assets/scripts/TextRotation.cs"
 -langversion:9.0
 

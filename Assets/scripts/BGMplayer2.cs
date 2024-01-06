@@ -24,7 +24,7 @@ public class BGMplayer2 : MonoBehaviour
 
         if (aaaObject != null && !hasBeenDestroyed)
         {
-            
+
         }
         else
         {
