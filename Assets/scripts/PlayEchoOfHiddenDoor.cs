@@ -8,7 +8,7 @@ public class PlayEchoOfHiddenDoor : MonoBehaviour
 
     private AudioSource audioSource;
     private Transform playerTransform;
-    private float maxDistance = 50f;  // 设置最大距离
+    public float maxDistance = 50f;  // 设置最大距离
 
     void Start()
     {

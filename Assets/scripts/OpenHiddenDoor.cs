@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OpenHiddenDoor : MonoBehaviour
 {
-    private float interactionDistance = 5f;
+    private float interactionDistance = 3.5f;
     public float scrollWheelSensitivity = 1f;
 
     private float tempTime;
@@ -25,9 +25,8 @@ public class OpenHiddenDoor : MonoBehaviour
     private void Update()
     {
         Vector3 playerPosition = Camera.main.transform.position;
-        float scrollWheelInput = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scrollWheelInput > 0f)
+        if (Input.GetKey(KeyCode.O))
         {
             nearestDoor = FindNearestDoor(playerPosition, "hidden door");
 

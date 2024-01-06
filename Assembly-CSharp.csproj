@@ -59,8 +59,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\scripts\PlayWindBellSound.cs" />
+    <Compile Include="Assets\scripts\CameraController.cs" />
+    <Compile Include="Assets\scripts\TextRotation.cs" />
+    <Compile Include="Assets\scripts\PickUp.cs" />
     <Compile Include="Assets\scripts\GameManager.cs" />
+    <Compile Include="Assets\scripts\AudioController.cs" />
+    <Compile Include="Assets\scripts\BGMplayer2.cs" />
     <Compile Include="Assets\scripts\OpenHiddenDoor.cs" />
+    <Compile Include="Assets\scripts\BGMplayer1.cs" />
     <Compile Include="Assets\scripts\PlayEcho.cs" />
     <Compile Include="Assets\scripts\PlayEchoOfHiddenDoor.cs" />
     <Compile Include="Assets\scripts\CharacterMove.cs" />
