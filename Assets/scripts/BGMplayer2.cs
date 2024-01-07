@@ -6,6 +6,7 @@ public class BGMplayer2 : MonoBehaviour
 {
     private AudioSource audioSource;
     private bool hasBeenDestroyed = false;
+    private bool gameEnded = false;
 
     void Start()
     {
@@ -14,9 +15,10 @@ public class BGMplayer2 : MonoBehaviour
 
     void Update()
     {
-        if (hasBeenDestroyed && !audioSource.isPlaying)
+        if (hasBeenDestroyed && !audioSource.isPlaying && !gameEnded)
         {
             audioSource.Play();
+            StartCoroutine(WaitForBGMEnd());
         }
 
         // 检查是否存在物体
@@ -24,11 +26,23 @@ public class BGMplayer2 : MonoBehaviour
 
         if (aaaObject != null && !hasBeenDestroyed)
         {
-
+            // 当物体存在时执行的操作
         }
         else
         {
             hasBeenDestroyed = true;
         }
+    }
+
+    IEnumerator WaitForBGMEnd()
+    {
+        yield return new WaitForSeconds(audioSource.clip.length);
+        EndGame();
+    }
+
+    void EndGame()
+    {
+        Debug.Log("游戏结束");
+        Application.Quit();
     }
 }

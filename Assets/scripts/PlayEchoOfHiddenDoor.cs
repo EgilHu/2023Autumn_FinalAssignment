@@ -9,13 +9,12 @@ public class PlayEchoOfHiddenDoor : MonoBehaviour
     private AudioSource audioSource;
     private Transform playerTransform;
     public float maxDistance = 50f;  // 设置最大距离
+    public float maxAngle = 120f;  // 设置最大夹角
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
     }
 
     void Update()
@@ -24,58 +23,62 @@ public class PlayEchoOfHiddenDoor : MonoBehaviour
         {
             // 启动协程，在两秒后播放第二个音效
             StartCoroutine(PlayDoorEchoSoundAfterDelay(1f));
-
         }
+    }
 
-        IEnumerator PlayDoorEchoSoundAfterDelay(float delay)
+    IEnumerator PlayDoorEchoSoundAfterDelay(float delay)
+    {
+        // 等待指定的延迟时间
+        yield return new WaitForSeconds(delay);
+
+        // 获取距离玩家最近的"wall"物体和夹角
+        Transform nearestWall = FindNearestHiddenDoor();
+        float angleToWall = Vector3.Angle(playerTransform.forward, nearestWall.position - playerTransform.position);
+
+        if (nearestWall != null)
         {
-            // 等待指定的延迟时间
-            yield return new WaitForSeconds(delay);
+            float distanceToWall = Vector3.Distance(playerTransform.position, nearestWall.position);
+            Debug.Log("Distance to Wall: " + distanceToWall);
 
-            // 获取距离玩家最近的"wall"物体
-            Transform nearestWall = FindNearestHiddenDoor();
+            // 映射
+            float normalizedDistance = Mathf.Clamp01(1 - distanceToWall / maxDistance);
+            float angleVolume = Mathf.Clamp01(1 - angleToWall / maxAngle);
 
-            if (nearestWall != null)
-            {
-                float distanceToWall = Vector3.Distance(playerTransform.position, nearestWall.position);
-                Debug.Log("Distance to Wall: " + distanceToWall);
+            // 计算综合音量
+            float finalVolume = normalizedDistance * angleVolume;
 
-                // 映射
-                float normalizedDistance = Mathf.Clamp01(1 - distanceToWall / maxDistance);
+            // 设置音效文件和音量
+            audioSource.clip = doorEchoSound;
+            audioSource.volume = finalVolume;  // 设置音量
+            Debug.Log("Normalized Distance: " + normalizedDistance);
+            Debug.Log("Angle Volume: " + angleVolume);
 
-                // 设置音效文件和音量
-                audioSource.clip = doorEchoSound;
-                audioSource.volume = normalizedDistance;  // 设置音量
-                Debug.Log("Normalized Distance: " + normalizedDistance);  // 添加这一行检查
-
-                audioSource.Play();
-            }
-            else
-            {
-                Debug.LogWarning("没有找到标记为“wall”的物体！");
-            }
+            audioSource.Play();
         }
-
-        Transform FindNearestHiddenDoor()
+        else
         {
-            GameObject[] walls = GameObject.FindGameObjectsWithTag("hidden door");
+            Debug.LogWarning("没有找到标记为“wall”的物体！");
+        }
+    }
 
-            Transform nearestHiddenDoor = null;
-            float minDistance = float.MaxValue;
+    Transform FindNearestHiddenDoor()
+    {
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("hidden door");
 
-            foreach (GameObject wall in walls)
+        Transform nearestHiddenDoor = null;
+        float minDistance = float.MaxValue;
+
+        foreach (GameObject wall in walls)
+        {
+            float distance = Vector3.Distance(playerTransform.position, wall.transform.position);
+
+            if (distance < minDistance)
             {
-                float distance = Vector3.Distance(playerTransform.position, wall.transform.position);
-
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestHiddenDoor = wall.transform;
-                }
+                minDistance = distance;
+                nearestHiddenDoor = wall.transform;
             }
-
-            return nearestHiddenDoor;
         }
 
+        return nearestHiddenDoor;
     }
 }

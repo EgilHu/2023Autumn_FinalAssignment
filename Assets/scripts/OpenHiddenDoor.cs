@@ -1,13 +1,17 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OpenHiddenDoor : MonoBehaviour
 {
-    private float interactionDistance = 3.5f;
+    public float interactionDistance = 3.5f;
     public float scrollWheelSensitivity = 1f;
 
-    private float tempTime;
+    private float tempTime = 0;
     private bool isTriggered;
     private GameObject nearestDoor;
+    private bool isWithinInteractionDistance = false;
+
+    public Text text;
 
     private void Start()
     {
@@ -20,21 +24,36 @@ public class OpenHiddenDoor : MonoBehaviour
             GetComponent<Renderer>().material.color.a
         );
         isTriggered = false;
+        text.enabled = false;
     }
 
     private void Update()
     {
         Vector3 playerPosition = Camera.main.transform.position;
 
-        if (Input.GetKey(KeyCode.O))
-        {
-            nearestDoor = FindNearestDoor(playerPosition, "hidden door");
+        nearestDoor = FindNearestDoor(playerPosition, "hidden door");
 
-            if (nearestDoor != null && Vector3.Distance(playerPosition, nearestDoor.transform.position) <= interactionDistance)
+        if (Vector3.Distance(playerPosition, nearestDoor.transform.position) <= interactionDistance)
+        {
+            isWithinInteractionDistance = true;
+            if (!isTriggered) // Only show text if not triggered by O key
             {
-                isTriggered = true;
-                Debug.Log("Hidden door triggered");
+                text.enabled = true;
             }
+        }
+        else
+        {
+            isWithinInteractionDistance = false;
+            if (!isTriggered) // Hide the text when outside interaction distance and not triggered by O key
+            {
+                text.enabled = false;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.O) && isWithinInteractionDistance)
+        {
+            isTriggered = true;
+            Debug.Log("Hidden door triggered");
         }
 
         if (tempTime < 1)
@@ -52,6 +71,14 @@ public class OpenHiddenDoor : MonoBehaviour
                 nearestDoor.GetComponent<Renderer>().material.color.a - tempTime / 2 * Time.deltaTime
             );
             Destroy(nearestDoor.gameObject, 2); // Destroy the nearest door after 2 seconds
+
+            // Reset tempTime for the next door interaction
+            tempTime = 0;
+            isTriggered = false;
+
+            // Hide text when the hidden door is destroyed
+            text.enabled = false;
+            //Destroy(text.gameObject, 1);
         }
     }
 

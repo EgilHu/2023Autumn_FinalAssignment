@@ -4,14 +4,13 @@ using System.Collections;
 
 public class ShakeBellText : MonoBehaviour
 {
-    public GameObject objectA;  // 要检测销毁的物体A
+    public GameObject objectA;  
     public Text[] textList; // 存放多个text的数组
     public float[] displayTimes; // 存放每个text显示的时间
     private int currentIndex = 0; // 当前显示的text索引
 
     private void Start()
     {
-        // 初始时隐藏所有text
         foreach (Text text in textList)
         {
             text.gameObject.SetActive(false);
@@ -24,7 +23,9 @@ public class ShakeBellText : MonoBehaviour
     {
         while (true)  // 无限循环
         {
-            // 检测物体A是否被销毁
+            // 等待10秒
+            yield return new WaitForSeconds(10f);
+
             if (objectA == null && currentIndex < textList.Length)
             {
                 // 显示当前text

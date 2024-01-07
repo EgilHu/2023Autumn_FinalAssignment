@@ -28,15 +28,6 @@ public class EndTextAndEndGame : MonoBehaviour
             {
                 text.gameObject.SetActive(true);
             }
-
-            // 延迟5秒后调用结束游戏方法
-            Invoke("EndGame", 5f);
         }
-    }
-
-    void EndGame()
-    {
-        Debug.Log("Game Over!");
-        // Unity提供的一种结束游戏的方法是调用Application.Quit()，但在某些平台上可能无效
     }
 }
