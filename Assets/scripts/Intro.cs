@@ -5,7 +5,7 @@ public class Intro : MonoBehaviour
     void Start()
     {
         // 延迟5秒后执行DisableObject方法
-        Invoke("DisableObject", 6f);
+        Invoke("DisableObject", 11f);
     }
 
     void DisableObject()

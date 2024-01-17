@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class OpenHiddenDoor : MonoBehaviour
 {
     public float interactionDistance = 3.5f;
-    public float scrollWheelSensitivity = 1f;
 
     private float tempTime = 0;
     private bool isTriggered;
@@ -12,6 +11,10 @@ public class OpenHiddenDoor : MonoBehaviour
     private bool isWithinInteractionDistance = false;
 
     public Text text;
+
+    public AudioClip soundClip;  // 音效文件
+    private AudioSource audioSource;
+    public float volumeMultiplier = 3.0f;  // 音效放大倍数
 
     private void Start()
     {
@@ -25,6 +28,18 @@ public class OpenHiddenDoor : MonoBehaviour
         );
         isTriggered = false;
         text.enabled = false;
+
+        audioSource = GetComponent<AudioSource>();
+
+        // 检查是否附加了 AudioSource 组件
+        if (audioSource == null)
+        {
+            // 如果没有，添加一个 AudioSource 组件
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // 设置音效文件
+        audioSource.clip = soundClip;
     }
 
     private void Update()
@@ -71,6 +86,7 @@ public class OpenHiddenDoor : MonoBehaviour
                 nearestDoor.GetComponent<Renderer>().material.color.a - tempTime / 2 * Time.deltaTime
             );
             Destroy(nearestDoor.gameObject, 2); // Destroy the nearest door after 2 seconds
+            PlaySound();
 
             // Reset tempTime for the next door interaction
             tempTime = 0;
@@ -99,5 +115,20 @@ public class OpenHiddenDoor : MonoBehaviour
         }
 
         return nearestDoor;
+    }
+
+    void PlaySound()
+    {
+        // 检查音效文件是否存在
+        if (soundClip != null)
+        {
+            // 设置音量并播放音效
+            audioSource.volume = volumeMultiplier;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("音效文件未设置！");
+        }
     }
 }
